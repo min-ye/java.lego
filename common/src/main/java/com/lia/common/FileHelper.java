@@ -52,9 +52,14 @@ public enum FileHelper {
    
    public String getContentAccordingTag(String content, String beginTag, String endTag){
       String output = new String();
-      int beginIndex = content.indexOf(beginTag) + beginTag.length();
-      int endIndex = content.indexOf(endTag);
-      output = content.substring(beginIndex, endIndex);
+      int beginIndex = content.indexOf(beginTag);
+      if (beginIndex > 0){
+    	  beginIndex += beginTag.length();
+    	  int endIndex = content.indexOf(endTag);
+    	  if (endIndex > beginIndex) {
+    		  output = content.substring(beginIndex, endIndex);
+    	  }
+      }
       return output;
    }
    
