@@ -19,14 +19,14 @@ import com.lia.common.WebHelper;
 import com.lia.lego.model.brickset.Inventory;
 import com.lia.lego.model.brickset.Set;
 
-public class BrickSet {
+public class BrickSetController {
    private String _setUrl = "";
    private String _inventoryUrl = "";
    private String _outputFolder = "";
    private String _rawInventoryFolder = "";
    private String _jsonInventoryFolder = "";
 
-   public BrickSet() throws Exception {
+   public BrickSetController() throws Exception {
       String json = getConfigFile();
       _setUrl = Profile.INSTANCE.getConfigValue(json, "source_url");
       _inventoryUrl = Profile.INSTANCE.getConfigValue(json, "source_inventory_url");
@@ -87,11 +87,11 @@ public class BrickSet {
       ArrayList<Set> arraySet = getSetFromJSON();
       int index = 1;
       for (Set set : arraySet) {
-         if (set.getYear().equals("2013")) {
+         //if (set.getYear().equals("2009")) {
             getBrickRaw(set);
             System.out.println(String.valueOf(index));
             index++;
-         }
+         //}
       }
       System.out.println(arraySet.size());
    }
@@ -120,7 +120,7 @@ public class BrickSet {
    }
 
    private String getConfigFile() throws Exception {
-      InputStream url = BrickSet.class.getResourceAsStream("/lego.json");
+      InputStream url = BrickSetController.class.getResourceAsStream("/lego.json");
       return IOUtils.toString(url);
    }
 
@@ -238,7 +238,7 @@ public class BrickSet {
       String fileName = _outputFolder + "inventory/" + set.getSetID() + ".csv";
       File file = new File(fileName);
       if (!file.exists()) {
-         String url = String.format(_inventoryUrl, set.getNumber() + "-" + set.getVariant());
+         String url = String.format(_inventoryUrl, set.getNumber().trim() + "-" + set.getVariant().trim());
          String content = WebHelper.INSTANCE.getContent(url);
 
          FileHelper.INSTANCE.saveContent(content, fileName);
