@@ -15,18 +15,24 @@ public enum MySQLHelper {
    INSTANCE;
    private String _driver = "com.mysql.jdbc.Driver";
    private HashMap item;
-   public void delete(MySQLConnectionParameter p, String name, HashMap item){
+   public void delete(MySQLConnectionParameter p, String name, HashMap item) throws Exception{
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
          connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
          QueryRunner query = new QueryRunner();
          String script = buildDeleteScript(name, item);
-         query.insert();
+         query.update(script);
+      }
+      catch (Exception ex){
+         throw ex;
+      }
+      finally {
+         connection.close();
       }
    }
    
-   public void insert(MySQLConnectionParameter p){
+   /*public void insert(MySQLConnectionParameter p){
       
    }
    
@@ -40,7 +46,7 @@ public enum MySQLHelper {
    
    public void getRecord(MySQLConnectionParameter p){
       
-   }
+   }*/
    
    private String buildDeleteScript(String name, HashMap item){
       String script = String.format("delete from %s ", name);
@@ -61,11 +67,7 @@ public enum MySQLHelper {
       script += condition;
       return script;
    }
-   
-   private Connection getConnection(){
-      
-   }
-   
+
    /*private Statement getStatement(MySQLConnectionParameter p) throws Exception{
       Class.forName(_driver);
       Connection connection = DriverManager.getConnection(p.getUrl(), p.getUser(), p.getPassword());
