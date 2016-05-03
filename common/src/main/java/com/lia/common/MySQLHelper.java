@@ -2,11 +2,8 @@ package com.lia.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -14,14 +11,14 @@ import org.apache.commons.dbutils.QueryRunner;
 public enum MySQLHelper {
    INSTANCE;
    private String _driver = "com.mysql.jdbc.Driver";
-   private HashMap item;
-   public void delete(MySQLConnectionParameter p, String name, HashMap item) throws Exception{
+
+   public void delete(MySQLConfig p, String entityName, HashMap<String, FieldModel> entityItem) throws Exception{
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
          connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
          QueryRunner query = new QueryRunner();
-         String script = buildDeleteScript(name, item);
+         String script = buildDeleteScript(entityName, entityItem);
          query.update(script);
       }
       catch (Exception ex){
@@ -32,15 +29,41 @@ public enum MySQLHelper {
       }
    }
    
-   /*public void insert(MySQLConnectionParameter p){
-      
+   public void create(MySQLConfig p, String entityName, HashMap<String, FieldModel> entityItem) throws Exception{
+      Connection connection = null;
+      try {
+         DbUtils.loadDriver(_driver);
+         connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
+         QueryRunner query = new QueryRunner();
+         String script = buildCreateScript(entityName, entityItem);
+         query.update(script);
+      }
+      catch (Exception ex){
+         throw ex;
+      }
+      finally {
+         connection.close();
+      }
    }
    
-   public void update(MySQLConnectionParameter p){
-      
+   public void update(MySQLConfig p, String entityName, HashMap<String, FieldModel> entityItem) throws Exception{
+      Connection connection = null;
+      try {
+         DbUtils.loadDriver(_driver);
+         connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
+         QueryRunner query = new QueryRunner();
+         String script = buildUpdateScript(entityName, entityItem);
+         query.update(script);
+      }
+      catch (Exception ex){
+         throw ex;
+      }
+      finally {
+         connection.close();
+      }
    }
    
-   public void getMultiRecord(MySQLConnectionParameter p){
+   /*public void getMultiRecord(MySQLConnectionParameter p){
       
    }
    
@@ -48,23 +71,96 @@ public enum MySQLHelper {
       
    }*/
    
-   private String buildDeleteScript(String name, HashMap item){
-      String script = String.format("delete from %s ", name);
-      Iterator iter = item.entrySet().iterator();
+   private String buildDeleteScript(String entityName, HashMap<String, FieldModel> entityItem) throws Exception {
+      String script = String.format("delete from %s ", entityName);
       String condition = "";
-      while (iter.hasNext()) {
-         Map.Entry entry = (Map.Entry) iter.next();
-         String keyField = entry.getKey().toString();
-         String keyValue = entry.getValue().toString();
-         if (condition.length() > 0){
-            condition += " and ";
+      for (Entry<String, FieldModel> entry : entityItem.entrySet()) {
+         String fieldName = entry.getKey().toString();
+         FieldModel fieldModel = entry.getValue();
+         if (fieldModel.getIfPrimary()){
+            if (condition.length() > 0){
+               condition += " and ";
+            }
+            switch (fieldModel.getType()) {
+            case "string":
+               condition += String.format("%s = '%s'", fieldName, fieldModel.getValue());
+               break;
+            default:
+               throw new Exception(String.format("Unknown Field Type On the Field [%s]", fieldName));
+            }
          }
-         condition += String.format("%s = %s", keyField, keyValue);
       }
       if (condition.length() > 0){
          condition = " where " + condition;
       }
       script += condition;
+      return script;
+   }
+   
+   private String buildCreateScript(String entityName, HashMap<String, FieldModel> entityItem) throws Exception {
+      String fieldScript = "";
+      String valueScript = "";
+      for (Entry<String, FieldModel> entry : entityItem.entrySet()) {
+         String fieldName = entry.getKey().toString();
+         FieldModel fieldModel = entry.getValue();
+         if (fieldModel.getIfPrimary()){
+            if (fieldScript.length() > 0){
+               fieldScript += ", ";
+            }
+            if (valueScript.length() > 0){
+               valueScript += ", ";
+            }
+            fieldScript += fieldName;
+            switch (fieldModel.getType()) {
+            case "string":
+               valueScript += String.format("'%s'", fieldName, fieldModel.getValue());
+               break;
+            default:
+               throw new Exception(String.format("Unknown Field Type On the Field [%s]", fieldName));
+            }
+         }
+      }
+      
+      String script = String.format("insert into %s(%s) values(%s)", entityName, fieldScript, valueScript);
+      return script;
+   }
+   
+   private String buildUpdateScript(String entityName, HashMap<String, FieldModel> entityItem) throws Exception {
+      String valueScript = "";
+      String condition = "";
+      for (Entry<String, FieldModel> entry : entityItem.entrySet()) {
+         String fieldName = entry.getKey().toString();
+         FieldModel fieldModel = entry.getValue();
+         if (valueScript.length() > 0){
+            valueScript += ", ";
+         }
+         switch (fieldModel.getType()) {
+         case "string":
+            valueScript += String.format("%s = '%s'", fieldName, fieldModel.getValue());
+            break;
+         default:
+            throw new Exception(String.format("Unknown Field Type On the Field [%s]", fieldName));
+         }
+         
+         if (fieldModel.getIfPrimary()){
+            if (condition.length() > 0){
+               condition += " and ";
+            }
+            switch (fieldModel.getType()) {
+            case "string":
+               condition += String.format("%s = '%s'", fieldName, fieldModel.getValue());
+               break;
+            default:
+               throw new Exception(String.format("Unknown Field Type On the Field [%s]", fieldName));
+            }
+         }
+
+      }
+      if (condition.length() > 0){
+         condition = " where " + condition;
+      }
+      
+      String script = String.format("update %s set %s %s", entityName, valueScript, condition);
       return script;
    }
 

@@ -1,11 +1,11 @@
 package com.lia.common;
 
-public class MySQLConnectionParameter {
+public class MySQLConfig {
    private String _url = "";
    private String _user = "";
    private String _password = "";
    
-   public MySQLConnectionParameter(String url, String user, String password){
+   public MySQLConfig(String url, String user, String password){
       this._url = url;
       this._user = user;
       this._password = password;

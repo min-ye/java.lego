@@ -1,5 +1,10 @@
 package com.lia.lego.model.brickset;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+import com.lia.common.FieldModel;
+
 public class Inventory {
    private String _setNumber = "";
    private String _partID = "";
@@ -80,5 +85,84 @@ public class Inventory {
       this._setCount = setCount;
    }
    
+   public String getFieldValue(String fieldName) throws Exception{
+      switch (fieldName){
+      case "SetNumber":
+         return this._setNumber;
+      case "PartID":
+         return this._partID;
+      case "Quantity":
+         return this._quantity;
+      case "Colour":
+         return this._colour;
+      case "Category":
+         return this._category;
+      case "DesignID":
+         return this._designID;
+      case "PartName":
+         return this._partName;
+      case "ImageURL":
+         return this._imageUrl;
+      case "SetCount":
+         return this._setCount;
+      default:
+         throw new Exception(String.format("Unknown Field Name:[%s]", fieldName));
+      }
+   }
    
+   public void setValue(String fieldName, String fieldValue) throws Exception
+   {
+      switch (fieldName) {
+         case "SetNumber":
+            this._setNumber = fieldValue;
+            break;
+         case "PartID":
+            this._partID = fieldValue;
+            break;
+         case "Quantity":
+            this._quantity = fieldValue;
+            break;
+         case "Colour":
+            this._colour = fieldValue;
+            break;
+         case "Category":
+            this._category = fieldValue;
+            break;
+         case "DesignID":
+            this._designID = fieldValue;
+            break;
+         case "PartName":
+            this._partName = fieldValue;
+            break;
+         case "ImageURL":
+            this._imageUrl = fieldValue;
+            break;
+         case "SetCount":
+            this._setCount = fieldValue;
+            break;
+         default:
+            throw new Exception(String.format("Unknown Field Name:[%s]", fieldName));
+      }
+   }
+   
+   public void importModel(HashMap<String, String> item) throws Exception{
+      for (Entry<String, String> entry : item.entrySet()) {
+         setValue(entry.getKey(), entry.getValue());
+      }
+   }
+   
+   public HashMap<String, FieldModel> exportModel(){
+      HashMap<String, FieldModel> modelMap = new HashMap<String, FieldModel>();
+      modelMap.put("SetNumber", new FieldModel("string", this._setNumber, true));
+      modelMap.put("PartID", new FieldModel("string", this._partID, false));
+      modelMap.put("Quantity", new FieldModel("string", this._quantity, false));
+      modelMap.put("Colour", new FieldModel("string", this._colour, false));
+      modelMap.put("Category", new FieldModel("string", this._category, false));
+      modelMap.put("DesignID", new FieldModel("string", this._designID, false));
+      modelMap.put("PartName", new FieldModel("string", this._partName, false));
+      modelMap.put("ImageURL", new FieldModel("string", this._imageUrl, false));
+      modelMap.put("SetCount", new FieldModel("string", this._setCount, false));
+
+      return modelMap;
+   }
 }

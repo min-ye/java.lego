@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class FileHelperTest 
 {
+   /*
    @Test
    public void testSaveContent() throws Exception
    {
@@ -35,5 +36,5 @@ public class FileHelperTest
       String result = FileHelper.INSTANCE.getContentAccordingTag(content, beginTag, endTag);
       FileHelper.INSTANCE.saveContent(result, "C:\\Users\\mye\\workspace\\lego\\raw\\2016.txt");
       assertEquals(true, result.length() > 0);
-   }
+   }*/
 }
