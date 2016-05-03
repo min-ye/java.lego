@@ -2,6 +2,7 @@ package com.lia.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -63,13 +64,13 @@ public enum MySQLHelper {
       }
    }
    
-   /*public void getMultiRecord(MySQLConnectionParameter p){
+   public void getMultiRecord(MySQLConfig p, String entityName, ArrayList<FilterCondition> filterCondition){
       
    }
    
-   public void getRecord(MySQLConnectionParameter p){
+   public void getRecord(MySQLConfig p, String entityName, ArrayList<FilterCondition> filterCondition) {
       
-   }*/
+   }
    
    private String buildDeleteScript(String entityName, HashMap<String, FieldModel> entityItem) throws Exception {
       String script = String.format("delete from %s ", entityName);
@@ -162,6 +163,33 @@ public enum MySQLHelper {
       
       String script = String.format("update %s set %s %s", entityName, valueScript, condition);
       return script;
+   }
+   
+   private String buildRetrieveScript(String entityName, ArrayList<FieldDefinition> arrayFieldDefinition, ArrayList<FilterCondition> arrayFilterCondition) throws Exception {
+      
+      /*String condition = "";
+      for (Entry<String, FieldModel> entry : entityItem.entrySet()) {
+         String fieldName = entry.getKey().toString();
+         FieldModel fieldModel = entry.getValue();
+         if (fieldModel.getIfPrimary()){
+            if (condition.length() > 0){
+               condition += " and ";
+            }
+            switch (fieldModel.getType()) {
+            case "string":
+               condition += String.format("%s = '%s'", fieldName, fieldModel.getValue());
+               break;
+            default:
+               throw new Exception(String.format("Unknown Field Type On the Field [%s]", fieldName));
+            }
+         }
+      }
+      if (condition.length() > 0){
+         condition = " where " + condition;
+      }
+      script += condition;
+      return script;*/
+      return "";
    }
 
    /*private Statement getStatement(MySQLConnectionParameter p) throws Exception{

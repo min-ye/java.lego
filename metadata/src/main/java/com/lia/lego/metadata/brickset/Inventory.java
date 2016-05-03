@@ -2,29 +2,32 @@ package com.lia.lego.metadata.brickset;
 
 import java.util.ArrayList;
 
-public class Inventory {
+import com.lia.common.FieldDefinition;
+
+public enum Inventory {
+   INSTANCE;
    public String getEntityName(){
       return "Inventory";
    }
    
-   public ArrayList<String> getKeyFieldName() {
-      ArrayList<String> arrayFieldName = new ArrayList<String>();
-      arrayFieldName.add("SetNumber");
-      arrayFieldName.add("PartID");
+   public ArrayList<FieldDefinition> getKeyFieldName() {
+      ArrayList<FieldDefinition> arrayFieldName = new ArrayList<FieldDefinition>();
+      arrayFieldName.add(new FieldDefinition("SetNumber", "string", true));
+      arrayFieldName.add(new FieldDefinition("PartID", "string", true));
       return arrayFieldName;
    }
    
-   public ArrayList<String> getFieldName() {
-      ArrayList<String> arrayFieldName = new ArrayList<String>();
-      arrayFieldName.add("SetNumber");
-      arrayFieldName.add("PartID");
-      arrayFieldName.add("Quantity");
-      arrayFieldName.add("Colour");
-      arrayFieldName.add("Category");
-      arrayFieldName.add("DesignID");
-      arrayFieldName.add("PartName");
-      arrayFieldName.add("ImageURL");
-      arrayFieldName.add("setCount");
+   public ArrayList<FieldDefinition> getFieldName() {
+      ArrayList<FieldDefinition> arrayFieldName = new ArrayList<FieldDefinition>();
+      arrayFieldName.add(new FieldDefinition("SetNumber", "string", true));
+      arrayFieldName.add(new FieldDefinition("PartID", "string", true));
+      arrayFieldName.add(new FieldDefinition("Quantity", "string", false));
+      arrayFieldName.add(new FieldDefinition("Colour", "string", false));
+      arrayFieldName.add(new FieldDefinition("Category", "string", false));
+      arrayFieldName.add(new FieldDefinition("DesignID", "string", false));
+      arrayFieldName.add(new FieldDefinition("PartName", "string", false));
+      arrayFieldName.add(new FieldDefinition("ImageURL", "string", false));
+      arrayFieldName.add(new FieldDefinition("setCount", "string", false));
       return arrayFieldName;
    }
 }
