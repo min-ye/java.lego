@@ -1,11 +1,14 @@
 package com.lia.lego.model.brickset;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import com.lia.common.FieldModel;
+import com.lia.common.CommonObject;
 
-public class Inventory {
+public class Inventory extends CommonObject{
    private String _setNumber = "";
    private String _partID = "";
    private String _quantity = "";
@@ -85,6 +88,12 @@ public class Inventory {
       this._setCount = setCount;
    }
    
+   @Override
+   public String getObjectName(){
+      return "Inventory";
+   }
+   
+   @Override
    public String getFieldValue(String fieldName) throws Exception{
       switch (fieldName){
       case "SetNumber":
@@ -110,6 +119,7 @@ public class Inventory {
       }
    }
    
+   @Override
    public void setValue(String fieldName, String fieldValue) throws Exception
    {
       switch (fieldName) {
@@ -145,14 +155,15 @@ public class Inventory {
       }
    }
    
-   public void importModel(HashMap<String, String> item) throws Exception{
-      for (Entry<String, String> entry : item.entrySet()) {
-         setValue(entry.getKey(), entry.getValue());
+   @Override
+   public void importModel(Map<String, Object> item) throws Exception{
+      for (Entry<String, Object> entry : item.entrySet()) {
+         setValue(entry.getKey(), entry.getValue().toString());
       }
    }
    
-   public HashMap<String, FieldModel> exportModel(){
-      HashMap<String, FieldModel> modelMap = new HashMap<String, FieldModel>();
+   public Map<String, FieldModel> exportModel(){
+      Map<String, FieldModel> modelMap = new HashMap<String, FieldModel>();
       modelMap.put("SetNumber", new FieldModel("string", this._setNumber, true));
       modelMap.put("PartID", new FieldModel("string", this._partID, false));
       modelMap.put("Quantity", new FieldModel("string", this._quantity, false));
@@ -164,5 +175,76 @@ public class Inventory {
       modelMap.put("SetCount", new FieldModel("string", this._setCount, false));
 
       return modelMap;
+   }
+   
+   @Override
+   public Map<String, String> exportFieldMap(){
+      Map<String, String> modelMap = new HashMap<String, String>();
+      modelMap.put("SetNumber", getFieldValueString(this._setNumber));
+      modelMap.put("PartID", getFieldValueString(this._partID));
+      modelMap.put("Quantity", getFieldValueString(this._quantity));
+      modelMap.put("Colour", getFieldValueString(this._colour));
+      modelMap.put("Category", getFieldValueString(this._category));
+      modelMap.put("DesignID", getFieldValueString(this._designID));
+      modelMap.put("PartName", getFieldValueString(this._partName));
+      modelMap.put("ImageURL", getFieldValueString(this._imageUrl));
+      modelMap.put("SetCount", getFieldValueString(this._setCount));
+
+      return modelMap;
+   }
+   
+   @Override
+   public Map<String, String> exportKeyFieldMap(){
+      Map<String, String> modelMap = new HashMap<String, String>();
+      modelMap.put("SetNumber", getFieldValueString(this._setNumber));
+      modelMap.put("PartID", getFieldValueString(this._partID));
+
+      return modelMap;
+   }
+   
+   @Override
+   public Map<String, String> exportValueFieldMap(){
+      Map<String, String> modelMap = new HashMap<String, String>();
+      
+      modelMap.put("Quantity", getFieldValueString(this._quantity));
+      modelMap.put("Colour", getFieldValueString(this._colour));
+      modelMap.put("Category", getFieldValueString(this._category));
+      modelMap.put("DesignID", getFieldValueString(this._designID));
+      modelMap.put("PartName", getFieldValueString(this._partName));
+      modelMap.put("ImageURL", getFieldValueString(this._imageUrl));
+      modelMap.put("SetCount", getFieldValueString(this._setCount));
+
+      return modelMap;
+   }
+
+   @Override
+   public ArrayList<String> getFieldName() {
+      ArrayList<String> fieldNameArray = new ArrayList<String>();
+      
+      fieldNameArray.add("SetNumber");
+      fieldNameArray.add("PartID");
+      fieldNameArray.add("Quantity");
+      fieldNameArray.add("Colour");
+      fieldNameArray.add("Category");
+      fieldNameArray.add("DesignID");
+      fieldNameArray.add("PartName");
+      fieldNameArray.add("ImageURL");
+      fieldNameArray.add("SetCount");
+      return fieldNameArray;
+   }
+   
+   @Override
+   public Object[] getObject() {
+      Object[] obj = new Object[9];
+      obj[0] = this._setNumber;
+      obj[1] = this._partID;
+      obj[2] = this._quantity;
+      obj[3] = this._colour;
+      obj[4] = this._category;
+      obj[5] = this._designID;
+      obj[6] = this._partID;
+      obj[7] = this._imageUrl;
+      obj[8] = this._setCount;
+      return obj;
    }
 }

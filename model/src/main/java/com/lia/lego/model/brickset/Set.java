@@ -1,11 +1,15 @@
 package com.lia.lego.model.brickset;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import com.lia.common.FieldModel;
 
-public class Set {
+import com.lia.common.CommonObject;
+
+public class Set extends CommonObject {
    private String _setID = "";
    private String _number = "";
    private String _variant = "";
@@ -127,6 +131,12 @@ public class Set {
       this._imageURL = _imageURL;
    }
    
+   @Override
+   public String getObjectName(){
+      return "Set";
+   }
+   
+   @Override
    public String getFieldValue(String fieldName) throws Exception{
       switch (fieldName){
       case "SetID":
@@ -162,6 +172,7 @@ public class Set {
       }
    }
    
+   @Override
    public void setValue(String fieldName, String fieldValue) throws Exception
    {
       switch (fieldName) {
@@ -212,14 +223,16 @@ public class Set {
       }
    }
    
-   public void importModel(HashMap<String, String> item) throws Exception{
-      for (Entry<String, String> entry : item.entrySet()) {
-         setValue(entry.getKey(), entry.getValue());
+   @Override
+   public void importModel(Map<String, Object> item) throws Exception{
+      for (Entry<String, Object> entry : item.entrySet()) {
+         setValue(entry.getKey(), entry.getValue().toString());
       }
    }
    
-   public HashMap<String, FieldModel> exportModel(){
-      HashMap<String, FieldModel> modelMap = new HashMap<String, FieldModel>();
+   @Override
+   public Map<String, FieldModel> exportModel(){
+      Map<String, FieldModel> modelMap = new HashMap<String, FieldModel>();
       modelMap.put("SetID", new FieldModel("string", this._setID, true));
       modelMap.put("Number", new FieldModel("string", this._number, false));
       modelMap.put("Variant", new FieldModel("string", this._variant, false));
@@ -236,5 +249,81 @@ public class Set {
       modelMap.put("ImageURL", new FieldModel("string", this._imageURL, false));
 
       return modelMap;
+   }
+   
+   @Override
+   public Map<String, String> exportFieldMap(){
+      Map<String, String> modelMap = new HashMap<String, String>();
+      modelMap.put("SetID", getFieldValueString(this._setID));
+      modelMap.put("Number", getFieldValueString(this._number));
+      modelMap.put("Variant", getFieldValueString(this._variant));
+      modelMap.put("Theme", getFieldValueString(this._theme));
+      modelMap.put("SubTheme", getFieldValueString(this._subTheme));
+      modelMap.put("Year", getFieldValueString(this._year));
+      modelMap.put("Name", getFieldValueString(this._name));
+      modelMap.put("Minifigs", getFieldValueString(this._minifigs));
+      modelMap.put("Pieces", getFieldValueString(this._pieces));
+      modelMap.put("UKPrice", getFieldValueString(this._priceUK));
+      modelMap.put("USPrice", getFieldValueString(this._priceUS));
+      modelMap.put("CAPrice", getFieldValueString(this._priceCA));
+      modelMap.put("EUPrice", getFieldValueString(this._priceEU));
+      modelMap.put("ImageURL", getFieldValueString(this._imageURL));
+
+      return modelMap;
+   }
+   
+   @Override
+   public Map<String, String> exportKeyFieldMap(){
+      Map<String, String> modelMap = new HashMap<String, String>();
+      modelMap.put("SetID", getFieldValueString(this._setID));
+
+      return modelMap;
+   }
+   
+   @Override
+   public Map<String, String> exportValueFieldMap(){
+      Map<String, String> modelMap = new HashMap<String, String>();
+      modelMap.put("Number", getFieldValueString(this._number));
+      modelMap.put("Variant", getFieldValueString(this._variant));
+      modelMap.put("Theme", getFieldValueString(this._theme));
+      modelMap.put("SubTheme", getFieldValueString(this._subTheme));
+      modelMap.put("Year", getFieldValueString(this._year));
+      modelMap.put("Name", getFieldValueString(this._name));
+      modelMap.put("Minifigs", getFieldValueString(this._minifigs));
+      modelMap.put("Pieces", getFieldValueString(this._pieces));
+      modelMap.put("UKPrice", getFieldValueString(this._priceUK));
+      modelMap.put("USPrice", getFieldValueString(this._priceUS));
+      modelMap.put("CAPrice", getFieldValueString(this._priceCA));
+      modelMap.put("EUPrice", getFieldValueString(this._priceEU));
+      modelMap.put("ImageURL", getFieldValueString(this._imageURL));
+
+      return modelMap;
+   }
+   
+   @Override
+   public ArrayList<String> getFieldName(){
+      ArrayList<String> arrayFieldName = new ArrayList<String>();
+      
+      return arrayFieldName;
+   }
+   
+   @Override
+   public Object[] getObject() {
+      Object[] obj = new Object[13];
+      obj[0] = this._number;
+      obj[1] = this._variant;
+      obj[2] = this._theme;
+      obj[3] = this._subTheme;
+      obj[4] = this._year;
+      obj[5] = this._name;
+      obj[6] = this._minifigs;
+      obj[7] = this._pieces;
+      obj[8] = this._priceUK;
+      obj[9] = this._priceUS;
+      obj[10] = this._priceCA;
+      obj[11] = this._priceEU;
+      obj[12] = this._imageURL;
+      
+      return obj;
    }
 }
