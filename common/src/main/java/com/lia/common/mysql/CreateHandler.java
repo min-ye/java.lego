@@ -13,7 +13,7 @@ public enum CreateHandler {
    INSTANCE;
    private String _driver = "com.mysql.jdbc.Driver";
    
-   public void create(Config p, CommonObject item) throws Exception{
+   public void create(Configure p, CommonObject item) throws Exception{
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
@@ -30,7 +30,7 @@ public enum CreateHandler {
       }
    }
    
-   public void create(Config c, List<CommonObject> objectList) throws Exception {
+   public void create(Configure c, List<CommonObject> objectList) throws Exception {
       Connection connection = null;
       CommonObject obj = null;
       if (objectList.size() > 0){

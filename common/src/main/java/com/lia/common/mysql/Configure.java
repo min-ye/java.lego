@@ -1,11 +1,11 @@
 package com.lia.common.mysql;
 
-public class Config {
+public class Configure {
    private String _url = "";
    private String _user = "";
    private String _password = "";
    
-   public Config(String url, String user, String password){
+   public Configure(String url, String user, String password){
       this._url = url;
       this._user = user;
       this._password = password;
