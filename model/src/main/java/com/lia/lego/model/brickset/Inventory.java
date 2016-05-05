@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.lia.common.FieldModel;
-import com.lia.common.CommonObject;
+import com.lia.common.mysql.FieldModel;
+import com.lia.common.mysql.CommonObject;
 
 public class Inventory extends CommonObject{
    private String _setNumber = "";

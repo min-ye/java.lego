@@ -1,7 +1,7 @@
 package com.lia.lego.metadata.brickset;
 
 import java.util.ArrayList;
-import com.lia.common.FieldDefinition;
+import com.lia.common.mysql.FieldDefinition;
 
 public enum Set {
    INSTANCE;

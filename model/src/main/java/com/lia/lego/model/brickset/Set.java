@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.lia.common.FieldModel;
+import com.lia.common.mysql.FieldModel;
 
-import com.lia.common.CommonObject;
+import com.lia.common.mysql.CommonObject;
 
 public class Set extends CommonObject {
    private String _setID = "";
@@ -230,7 +230,6 @@ public class Set extends CommonObject {
       }
    }
    
-   @Override
    public Map<String, FieldModel> exportModel(){
       Map<String, FieldModel> modelMap = new HashMap<String, FieldModel>();
       modelMap.put("SetID", new FieldModel("string", this._setID, true));

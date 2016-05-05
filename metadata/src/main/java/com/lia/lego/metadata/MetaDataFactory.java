@@ -2,7 +2,7 @@ package com.lia.lego.metadata;
 
 import java.util.ArrayList;
 
-import com.lia.common.FieldDefinition;
+import com.lia.common.mysql.FieldDefinition;
 
 public enum MetaDataFactory {
    INSTANCE;

@@ -1,7 +1,5 @@
-package com.lia.common;
+package com.lia.common.mysql;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +12,7 @@ public abstract class CommonObject {
    
    public abstract void importModel(Map<String, Object> item) throws Exception;
    
-   public abstract Map<String, FieldModel> exportModel();
+   //public abstract Map<String, FieldModel> exportModel();
    
    public abstract Map<String, String> exportFieldMap();
    

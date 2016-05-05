@@ -1,4 +1,4 @@
-package com.lia.common;
+package com.lia.common.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,11 +13,11 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
-public enum MySQLHelper {
+public enum UpdateHandler {
    INSTANCE;
    private String _driver = "com.mysql.jdbc.Driver";
 
-   public void delete(MySQLConfig p, CommonObject item) throws Exception{
+   public void delete(Config p, CommonObject item) throws Exception{
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
@@ -34,7 +34,7 @@ public enum MySQLHelper {
       }
    }
    
-   public void create(MySQLConfig p, CommonObject item) throws Exception{
+   public void create(Config p, CommonObject item) throws Exception{
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
@@ -51,7 +51,7 @@ public enum MySQLHelper {
       }
    }
    
-   public void update(MySQLConfig p, CommonObject item) throws Exception{
+   public void update(Config p, CommonObject item) throws Exception{
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
@@ -68,7 +68,7 @@ public enum MySQLHelper {
       }
    }
    
-   public void create(MySQLConfig c, List<CommonObject> objectList) throws Exception {
+   public void create(Config c, List<CommonObject> objectList) throws Exception {
       Connection connection = null;
       CommonObject obj = null;
       if (objectList.size() > 0){
@@ -91,7 +91,7 @@ public enum MySQLHelper {
       }
    }
    
-   public List<Map<String, Object>> getMultiRecord(MySQLConfig p, CommonObject item, ArrayList<FilterCondition> conditionArray) throws Exception{
+   public List<Map<String, Object>> getMultiRecord(Config p, CommonObject item, ArrayList<FilterCondition> conditionArray) throws Exception{
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
@@ -109,7 +109,7 @@ public enum MySQLHelper {
       }
    }
    
-   public Map<String, Object> getRecord(MySQLConfig p, CommonObject item, List<FilterCondition> conditionList) throws Exception {
+   public Map<String, Object> getRecord(Config p, CommonObject item, List<FilterCondition> conditionList) throws Exception {
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);

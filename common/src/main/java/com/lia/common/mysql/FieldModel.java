@@ -1,4 +1,4 @@
-package com.lia.common;
+package com.lia.common.mysql;
 
 public class FieldModel {
    private String _type;
