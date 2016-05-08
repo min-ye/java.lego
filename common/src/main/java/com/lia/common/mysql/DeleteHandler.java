@@ -8,18 +8,17 @@ import java.util.Map.Entry;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 
-public enum DeleteHandler {
-   INSTANCE;
+public class DeleteHandler {
    private String _driver = "com.mysql.jdbc.Driver";
 
    public void delete(Configure p, CommonObject item) throws Exception{
       Connection connection = null;
       try {
-         DbUtils.loadDriver(_driver);
-         connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
+         Class.forName(_driver);
+         connection = DriverManager.getConnection(p.getUrl(), p.getUser(), p.getPassword());
          QueryRunner query = new QueryRunner();
-         String script = buildDeleteScript(item.getObjectName(), item.exportKeyFieldMap());
-         query.update(script);
+         String script = buildDeleteScript(item.fetchObjectName(), item.exportKeyFieldMap());
+         query.update(connection, script);
       }
       catch (Exception ex){
          throw ex;
@@ -29,14 +28,14 @@ public enum DeleteHandler {
       }
    }
    
-   public void empty(Configure c, CommonObject item) throws Exception {
+   public void empty(Configure c, String entityName) throws Exception {
       Connection connection = null;
       try {
          DbUtils.loadDriver(_driver);
-         connection = DriverManager.getConnection(c.getPassword(), c.getUser(), c.getPassword());
+         connection = DriverManager.getConnection(c.getUrl(), c.getUser(), c.getPassword());
          QueryRunner query = new QueryRunner();
-         String script = buildDeleteScript(item.getObjectName());
-         query.update(script);
+         String script = buildDeleteScript(entityName);
+         query.update(connection, script);
       }
       catch (Exception ex){
          throw ex;

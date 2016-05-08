@@ -85,7 +85,7 @@ public class RawController {
       File[] multiFile = root.listFiles();
       List<Set> setList = new ArrayList<Set>();
       for (File file : multiFile) {
-         if (file.isFile() && file.toString().contains("csv")) {
+         if (file.isFile() && file.toString().contains(".csv")) {
             System.out.println("processing " + file.toString());
             for (Set set : getSetListFromFile(file.toString())) {
                setList.add(set);

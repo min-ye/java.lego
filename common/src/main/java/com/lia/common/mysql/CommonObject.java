@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class CommonObject {
-   public abstract String getObjectName();
+   public abstract String fetchObjectName();
    
    public abstract String getFieldValue(String fieldName) throws Exception;
    
@@ -20,9 +20,9 @@ public abstract class CommonObject {
    
    public abstract Map<String, String> exportValueFieldMap();
    
-   public abstract List<String> getFieldName();
+   public abstract List<String> fetchFieldName();
    
-   public abstract Object[] getObject();
+   public abstract Object[] fetchObject();
    
    protected String getFieldValueString(String value) {
       return String.format("'%s'", value);

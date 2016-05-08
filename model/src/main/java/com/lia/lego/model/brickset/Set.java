@@ -132,8 +132,8 @@ public class Set extends CommonObject {
    }
    
    @Override
-   public String getObjectName(){
-      return "Set";
+   public String fetchObjectName(){
+      return "BrickSet";
    }
    
    @Override
@@ -300,14 +300,14 @@ public class Set extends CommonObject {
    }
    
    @Override
-   public ArrayList<String> getFieldName(){
+   public ArrayList<String> fetchFieldName(){
       ArrayList<String> arrayFieldName = new ArrayList<String>();
       
       return arrayFieldName;
    }
    
    @Override
-   public Object[] getObject() {
+   public Object[] fetchObject() {
       Object[] obj = new Object[13];
       obj[0] = this._number;
       obj[1] = this._variant;

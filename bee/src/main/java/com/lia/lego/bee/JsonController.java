@@ -1,11 +1,8 @@
 package com.lia.lego.bee;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
@@ -13,6 +10,7 @@ import org.json.JSONObject;
 
 import com.lia.common.FileHelper;
 import com.lia.common.Profile;
+import com.lia.common.mysql.CommonObject;
 import com.lia.lego.model.brickset.Inventory;
 import com.lia.lego.model.brickset.Set;
 
@@ -38,20 +36,17 @@ public class JsonController {
       FileHelper.INSTANCE.saveContent(output, outputFile);
    }
    
-   public void convertInventoryToJson() throws Exception {
+   public void convertInventoryFromRawToJson() throws Exception {
       RawController controller = new RawController();
       List<Set> setList = controller.getSetList();
       for (Set set : setList) {
          List<Inventory> inventoryList = controller.getInventoryListBySetFromFile(set);
 
-         for (Inventory inventory : inventoryList) {
-            inventoryList.add(inventory);
-         }
          if (inventoryList.size() > 0) {
             JSONArray jsonArray = new JSONArray(inventoryList);
 
             String output = jsonArray.toString(3);
-            String outputFile = _inventoryFolder + set.getSetID() + "json";
+            String outputFile = _inventoryFolder + set.getSetID() + ".json";
             FileHelper.INSTANCE.saveContent(output, outputFile);
          }
       }
@@ -62,11 +57,11 @@ public class JsonController {
       return IOUtils.toString(url);
    }
 
-   public List<Set> getSetList() throws Exception {
+   public List<CommonObject> getSetList() throws Exception {
       String setJsonFile = _setFolder + "set.json";
       String jsonSet = FileHelper.INSTANCE.getContent(setJsonFile);
       JSONArray jsonArray = new JSONArray(jsonSet);
-      ArrayList<Set> arraySet = new ArrayList<Set>();
+      List<CommonObject> arraySet = new ArrayList<CommonObject>();
       for (int index = 0; index < jsonArray.length(); index++) {
          JSONObject obj = jsonArray.getJSONObject(index);
          Set set = new Set(obj.getString("setID"), obj.getString("number"), obj.getString("variant"),
@@ -78,11 +73,11 @@ public class JsonController {
       return arraySet;
    }
    
-   public List<Inventory> getInventoryBySet(Set set) throws Exception {
+   public List<CommonObject> getInventoryBySet(Set set) throws Exception {
       String fileName = _inventoryFolder + set.getSetID() + ".json";
       String inventoryJson = FileHelper.INSTANCE.getContent(fileName);
       JSONArray jsonArray = new JSONArray(inventoryJson);
-      List<Inventory> inventoryList = new ArrayList<Inventory>();
+      List<CommonObject> inventoryList = new ArrayList<CommonObject>();
       for (int index = 0; index < jsonArray.length(); index++) {
          JSONObject obj = jsonArray.getJSONObject(index);
          Inventory inventory = new Inventory(obj.getString("setNumber"), obj.getString("partID"), obj.getString("quantity"),

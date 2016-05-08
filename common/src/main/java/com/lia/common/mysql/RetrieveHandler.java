@@ -11,8 +11,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
-public enum RetrieveHandler {
-   INSTANCE;
+public class RetrieveHandler {
    private String _driver = "com.mysql.jdbc.Driver";
 
    public List<Map<String, Object>> getMultiRecord(Configure p, CommonObject item, ArrayList<FilterCondition> conditionArray) throws Exception{
@@ -21,7 +20,7 @@ public enum RetrieveHandler {
          DbUtils.loadDriver(_driver);
          connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
          QueryRunner runner = new QueryRunner();
-         String query = buildRetrieveScript(item.getObjectName(), item.getFieldName(), conditionArray);
+         String query = buildRetrieveScript(item.fetchObjectName(), item.fetchFieldName(), conditionArray);
          ArrayList<Map<String, Object>> list = (ArrayList<Map<String, Object>>) runner.query(query, new MapListHandler());
          return list;
       }
@@ -39,7 +38,7 @@ public enum RetrieveHandler {
          DbUtils.loadDriver(_driver);
          connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
          QueryRunner runner = new QueryRunner();
-         String query = buildRetrieveScript(item.getObjectName(), item.getFieldName(), conditionList);
+         String query = buildRetrieveScript(item.fetchObjectName(), item.fetchFieldName(), conditionList);
          Map<String, Object> map = (Map<String, Object>) runner.query(query, new MapHandler());
          return map;
       }

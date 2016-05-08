@@ -89,8 +89,8 @@ public class Inventory extends CommonObject{
    }
    
    @Override
-   public String getObjectName(){
-      return "Inventory";
+   public String fetchObjectName(){
+      return "BrickSetInventory";
    }
    
    @Override
@@ -218,7 +218,7 @@ public class Inventory extends CommonObject{
    }
 
    @Override
-   public ArrayList<String> getFieldName() {
+   public ArrayList<String> fetchFieldName() {
       ArrayList<String> fieldNameArray = new ArrayList<String>();
       
       fieldNameArray.add("SetNumber");
@@ -234,7 +234,7 @@ public class Inventory extends CommonObject{
    }
    
    @Override
-   public Object[] getObject() {
+   public Object[] fetchObject() {
       Object[] obj = new Object[9];
       obj[0] = this._setNumber;
       obj[1] = this._partID;

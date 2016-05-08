@@ -1,42 +1,30 @@
 package com.lia.lego.bee;
 
-import java.io.File;
-import java.sql.*;
-import java.util.ArrayList;
+import java.util.List;
 
-import org.json.JSONArray;
-
-import com.lia.common.FileHelper;
-import com.lia.lego.model.brickset.Set;
+import com.lia.common.mysql.CommonObject;
+import com.lia.common.mysql.Configure;
+import com.lia.common.mysql.CreateHandler;
+import com.lia.common.mysql.DeleteHandler;
 
 public class DBController {
-   private String _driver = "com.mysql.jdbc.Driver";
    private String _url = "jdbc:mysql://127.0.0.1:3306/lego";
    private String _user = "root";
    private String _password = "lia";
    
-   public void convertSetFromJsonToMySQL(String jsonFolder){
+   public void convertSetFromJsonToMySQL(){
       try{
-            File root = new File(_outputFolder);
-            File[] multiFile = root.listFiles();
-            ArrayList<Set> multiSet = new ArrayList<Set>();
-            for (File file : multiFile) {
-               if (file.isFile() && file.toString().contains("csv")) {
-                  System.out.println("processing " + file.toString());
-                  for (Set set : getMultiSetFromFile(file.toString())) {
-                     multiSet.add(set);
-                  }
-               }
-            }
-            JSONArray jsonArray = new JSONArray(multiSet);
-
-            String output = jsonArray.toString(3);
-            String outputFile = _outputFolder + "set.json";
-            FileHelper.INSTANCE.saveContent(output, outputFile);
-         }
-         catch (Exception ex){
+         Configure c = new Configure(_url, _user, _password);
+         DeleteHandler deleteHandler = new DeleteHandler();
+         deleteHandler.empty(c, "BrickSet");
+         JsonController jsonController = new JsonController();
+         List<CommonObject> setList = jsonController.getSetList();
+         CreateHandler createHandler = new CreateHandler();
+         createHandler.create(c, setList);
+      }
+      catch (Exception ex){
          
-         }
+      }
    }
    
    public void convertInventoryFromJsonToMySQL(String jsonFolder){

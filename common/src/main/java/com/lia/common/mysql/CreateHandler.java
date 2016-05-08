@@ -9,8 +9,7 @@ import java.util.Map.Entry;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 
-public enum CreateHandler {
-   INSTANCE;
+public class CreateHandler {
    private String _driver = "com.mysql.jdbc.Driver";
    
    public void create(Configure p, CommonObject item) throws Exception{
@@ -19,7 +18,7 @@ public enum CreateHandler {
          DbUtils.loadDriver(_driver);
          connection = DriverManager.getConnection(p.getPassword(), p.getUser(), p.getPassword());
          QueryRunner query = new QueryRunner();
-         String script = buildCreateScript(item.getObjectName(), item.exportFieldMap());
+         String script = buildCreateScript(item.fetchObjectName(), item.exportFieldMap());
          query.update(script);
       }
       catch (Exception ex){
@@ -39,10 +38,10 @@ public enum CreateHandler {
       try {
          if (obj != null) {
             DbUtils.loadDriver(_driver);
-            connection = DriverManager.getConnection(c.getPassword(), c.getUser(), c.getPassword());
+            connection = DriverManager.getConnection(c.getUrl(), c.getUser(), c.getPassword());
             QueryRunner query = new QueryRunner();
          
-            query.batch(buildBatchCreateScript(obj.getObjectName(), obj.getFieldName()), buildBatchCreateValue(obj.getObjectName(), objectList));
+            query.batch(connection, buildBatchCreateScript(obj.fetchObjectName(), obj.fetchFieldName()), buildBatchCreateValue(obj.fetchObjectName(), objectList));
          }
       }
       catch (Exception ex){
@@ -95,7 +94,7 @@ public enum CreateHandler {
       Object[][] obj = new Object[objectList.size()][];
       int index = 0;
       for (CommonObject commonObject : objectList){
-         obj[index] = commonObject.getObject();
+         obj[index] = commonObject.fetchObject();
          index ++;
       }
       return obj;
