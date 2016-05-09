@@ -35,7 +35,7 @@ public class RawController {
 
    public void downloadSetRawToCSV() {
       try {
-         for (int year = 1949; year < 2017; year++) {
+         for (int year = 2008; year < 2011; year++) {
             int index = 1;
             while (index != 0) {
                String url = String.format(_setUrl, year, index);
@@ -200,5 +200,9 @@ public class RawController {
          output.add(item);
       }
       return output;
+   }
+   
+   public void download(){
+      
    }
 }

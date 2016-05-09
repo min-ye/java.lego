@@ -1,5 +1,8 @@
 package com.lia.lego.bee;
 
+//import com.lia.common.FileHelper;
+//import com.lia.common.WebHelper;
+
 public class Console {
    public static void main(String[] args) {
       try {
@@ -7,6 +10,17 @@ public class Console {
          JsonController json = new JsonController();
          DBController db = new DBController();
          db.convertSetFromJsonToMySQL();
+         //json.convertSetFromRawToJson();
+         
+         /*for (int i = 1; i <= 35; i++)
+         {
+            String userId = "1140301" + String.format("%03d", i);
+            String output = WebHelper.INSTANCE.getContent(userId, "123");
+            String file = "C:\\Users\\mye\\workspace\\hy\\" + userId + ".fil";
+            FileHelper.INSTANCE.saveContent(output, file);
+         }*/
+         
+         
          String choice = "";
          while (!choice.equals("0")) {
             java.io.Console console = System.console();

@@ -10,7 +10,7 @@ import com.lia.common.mysql.DeleteHandler;
 public class DBController {
    private String _url = "jdbc:mysql://127.0.0.1:3306/lego";
    private String _user = "root";
-   private String _password = "lia";
+   private String _password = "mercury";
    
    public void convertSetFromJsonToMySQL(){
       try{
@@ -23,7 +23,7 @@ public class DBController {
          createHandler.create(c, setList);
       }
       catch (Exception ex){
-         
+         System.out.println(ex.getMessage());
       }
    }
    
