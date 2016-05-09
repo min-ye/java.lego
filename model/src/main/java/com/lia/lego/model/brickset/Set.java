@@ -46,6 +46,24 @@ public class Set extends CommonObject {
       this._imageURL = imageURL;
    }
    
+   public Set(CommonObject commonObject){
+      Object[] object = commonObject.fetchObject();
+      this._setID = object[0].toString();
+      this._number = object[1].toString();
+      this._variant = object[2].toString();
+      this._theme = object[3].toString();
+      this._subTheme = object[4].toString();
+      this._year = object[5].toString();
+      this._name = object[6].toString();
+      this._minifigs = object[7].toString();
+      this._pieces = object[8].toString();
+      this._priceUK = object[9].toString();
+      this._priceUS = object[10].toString();
+      this._priceCA = object[11].toString();
+      this._priceEU = object[12].toString();
+      this._imageURL = object[13].toString();
+   }
+   
    public String getSetID() {
       return _setID;
    }

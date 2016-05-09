@@ -30,25 +30,27 @@ public class CreateHandler {
    }
    
    public void create(Configure c, List<CommonObject> objectList) throws Exception {
-      Connection connection = null;
-      CommonObject obj = null;
-      if (objectList.size() > 0){
-         obj = objectList.get(0);
-      }
-      try {
-         if (obj != null) {
-            DbUtils.loadDriver(_driver);
-            connection = DriverManager.getConnection(c.getUrl(), c.getUser(), c.getPassword());
-            QueryRunner query = new QueryRunner();
-         
-            query.batch(connection, buildBatchCreateScript(obj.fetchObjectName(), obj.fetchFieldName()), buildBatchCreateValue(obj.fetchObjectName(), objectList));
+      if (objectList.size() > 0) {
+         Connection connection = null;
+         CommonObject obj = null;
+         if (objectList.size() > 0){
+            obj = objectList.get(0);
          }
-      }
-      catch (Exception ex){
-         throw ex;
-      }
-      finally {
-         connection.close();
+         try {
+            if (obj != null) {
+               DbUtils.loadDriver(_driver);
+               connection = DriverManager.getConnection(c.getUrl(), c.getUser(), c.getPassword());
+               QueryRunner query = new QueryRunner();
+         
+               query.batch(connection, buildBatchCreateScript(obj.fetchObjectName(), obj.fetchFieldName()), buildBatchCreateValue(obj.fetchObjectName(), objectList));
+            }
+         }
+         catch (Exception ex){
+            throw ex;
+         }
+         finally {
+            connection.close();
+         }
       }
    }
    

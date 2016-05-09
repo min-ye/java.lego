@@ -9,8 +9,12 @@ public class Console {
          RawController raw = new RawController();
          JsonController json = new JsonController();
          DBController db = new DBController();
-         db.convertSetFromJsonToMySQL();
+         //raw.downloadSetRawToCSV();
+         //raw.downloadInventoryRawToCSV();
          //json.convertSetFromRawToJson();
+         //json.convertInventoryFromRawToJson();
+         //db.convertSetFromJsonToMySQL();
+         db.convertInventoryFromJsonToMySQL();
          
          /*for (int i = 1; i <= 35; i++)
          {
@@ -20,8 +24,7 @@ public class Console {
             FileHelper.INSTANCE.saveContent(output, file);
          }*/
          
-         
-         String choice = "";
+         /*String choice = "";
          while (!choice.equals("0")) {
             java.io.Console console = System.console();
             console.printf("Please input your choice:\n");
@@ -46,6 +49,7 @@ public class Console {
                json.convertSetFromRawToJson();
                break;
             case "5":
+               db.convertSetFromJsonToMySQL();
                break;
             case "6":
                raw.downloadInventoryRawToCSV();
@@ -54,8 +58,7 @@ public class Console {
                json.convertInventoryFromRawToJson();
                break;
             case "8":
-               String setID = console.readLine("Set id: \n");
-               console.printf("%s\n", setID);
+               db.convertInventoryFromJsonToMySQL();
                break;
             case "0":
                
@@ -65,7 +68,7 @@ public class Console {
          //brickSet.getSetRaw();
          //brickSet.convertSetToJson();
          //brickSet.getBrickRaw();
-         //brickSet.convertBrickToJson();
+         //brickSet.convertBrickToJson();*/
       } catch (Exception ex) {
          System.out.println(ex.getMessage());
       }

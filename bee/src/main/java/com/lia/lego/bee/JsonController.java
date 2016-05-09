@@ -1,5 +1,6 @@
 package com.lia.lego.bee;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,15 +76,19 @@ public class JsonController {
    
    public List<CommonObject> getInventoryBySet(Set set) throws Exception {
       String fileName = _inventoryFolder + set.getSetID() + ".json";
-      String inventoryJson = FileHelper.INSTANCE.getContent(fileName);
-      JSONArray jsonArray = new JSONArray(inventoryJson);
       List<CommonObject> inventoryList = new ArrayList<CommonObject>();
-      for (int index = 0; index < jsonArray.length(); index++) {
-         JSONObject obj = jsonArray.getJSONObject(index);
-         Inventory inventory = new Inventory(obj.getString("setNumber"), obj.getString("partID"), obj.getString("quantity"),
-               obj.getString("colour"), obj.getString("category"), obj.getString("designID"), obj.getString("partName"),
-               obj.getString("imageUrl"), obj.getString("setCount"));
-         inventoryList.add(inventory);
+      File file = new File(fileName);
+      if (file.exists()){
+         String inventoryJson = FileHelper.INSTANCE.getContent(fileName);
+         JSONArray jsonArray = new JSONArray(inventoryJson);
+         
+         for (int index = 0; index < jsonArray.length(); index++) {
+            JSONObject obj = jsonArray.getJSONObject(index);
+            Inventory inventory = new Inventory(obj.getString("setNumber"), obj.getString("partID"), obj.getString("quantity"),
+                  obj.getString("colour"), obj.getString("category"), obj.getString("designID"), obj.getString("partName"),
+                  obj.getString("imageUrl"), obj.getString("setCount"));
+            inventoryList.add(inventory);
+         }
       }
       return inventoryList;
    }

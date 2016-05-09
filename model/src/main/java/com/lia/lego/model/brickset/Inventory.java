@@ -33,6 +33,19 @@ public class Inventory extends CommonObject{
       this._setCount = setCount;
    }
    
+   public Inventory(CommonObject commonObject){
+      Object[] object = commonObject.fetchObject();
+      this._setNumber = object[0].toString();
+      this._partID = object[1].toString();
+      this._quantity = object[2].toString();
+      this._colour = object[3].toString();
+      this._category = object[4].toString();
+      this._designID = object[5].toString();
+      this._partName = object[6].toString();
+      this._imageUrl = object[7].toString();
+      this._setCount = object[8].toString();
+   }
+   
    public String getSetNumber() {
       return _setNumber;
    }
